@@ -1,0 +1,98 @@
+<template>
+  <html>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <div id="app">
+    <div id="message-list">
+      <div class="message" v-for="(item, idx) in messageList" :key="idx">
+        <img :src="item.src" style="width: 30px; height: 30px;" alt="图片">
+        <vue-markdown :id="item.id" :source="item.message" :class="item.isRobot ? 'mdRobot' : 'mdMe'"></vue-markdown>
+      </div>
+    </div>
+    <div id="message-input-box">
+      <input id="message-input" type="text" v-model="question"/>
+      <Button @click="sendMessge">发送</Button>
+    </div>
+  </div>
+  </html>
+</template>
+
+<script>
+import VueMarkdown from 'vue-markdown'
+
+export default {
+  name: 'App',
+  components: {
+    VueMarkdown
+  },
+  data () {
+    return {
+      question: '',
+      messageList: [{id: uuidv4(), isRobot: true, src: require('./assets/robot.png'), message: '你好呀，我是AI机器人，有什么可以帮到你的吗？'}],
+      count: 0,
+      requestId: 0
+    }
+  },
+  mounted () {
+    this.requestId = Date.now() + '_' + Math.round(Math.random() * 10000)
+  },
+  methods: {
+    sendMessge () {
+      if (this.question.length > 0) {
+        let uuidMe = uuidv4()
+        this.messageList.push({id: uuidMe, isRobot: false, src: require('./assets/me.png'), message: this.question})
+
+        let uuidRobot = uuidv4()
+        let messageItem = {id: uuidRobot, isRobot: true, src: require('./assets/robot.png'), message: ''}
+        this.messageList.push(messageItem)
+
+        let startTime = 0
+        const eventSource = new EventSource(`http://43.156.124.211/index.php?req_id=${this.requestId}&question=${this.question}`)
+        eventSource.onmessage = function (e) {
+          if (e.data === '[DONE]') {
+            eventSource.close()
+          } else {
+            let txt = JSON.parse(e.data).choices[0].delta.content
+            if (txt !== undefined) {
+              setTimeout(function () {
+                messageItem.message += txt
+                window.scrollTo(0, document.body.scrollHeight)
+              }, startTime)
+              startTime += 30
+            }
+          }
+        }
+        eventSource.onerror = function (e) {
+          console.log(e)
+          eventSource.close()
+        }
+
+        this.question = ''
+      }
+    }
+  }
+}
+
+function uuidv4 () {
+  return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
+    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+  )
+}
+</script>
+
+<style>
+#app {
+  margin-top: 60px;
+}
+
+.message img {
+  vertical-align: middle;
+}
+
+.mdRobot {
+  background-color: #8bd8f9;
+}
+
+.mdMe {
+  background-color: #7df79e;
+}
+</style>

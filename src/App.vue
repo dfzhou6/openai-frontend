@@ -9,22 +9,26 @@
         </div>
         <div style="clear: both;"><br></div>
       </div>
+      <div class="message-list-bottom"><br></div>
     </div>
-    <div class="row">
-      <button class="btn btn-secondary btn-stop" @click="stopAnswer" type="button">停止回答</button>
-    </div>
-    <div class="row">
-      <div class="col-12">
-        <div class="input-group">
-          <textarea class="form-control" id="message-input" type="text" v-model="question" @keydown.enter="ctrlSendMessage" placeholder="请输入...  (Enter : 发送, Ctrl+Enter : 换行)" />
+    <div class="row fixed-bottom">
+      <div><button class="btn btn-secondary btn-stop" @click="stopAnswer" type="button">停止回答</button></div>
+      <div class="col-1 col-sm-1">
+      </div>
+      <div class="col-8 col-sm-9">
+        <div class="input-group footer-input">
+          <textarea class="form-control" id="message-input" rows="5" style="line-height: 30px;" type="text" v-model="question" @keydown.enter="ctrlSendMessage" placeholder="Ctrl+Enter: 换行" />
+        </div>
+      </div>
+      <div class="col-2 col-sm-1">
+        <div class="input-group footer-btn">
           <button @click="sendMessge" class="btn btn-primary btn-send" type="button">发送</button>
         </div>
       </div>
-    </div>
-    <div class="row">
-      <br>
-    </div>
+      <div class="col-sm-1">
 
+      </div>
+    </div>
   </div>
 </template>
 
@@ -44,7 +48,7 @@ export default {
   data () {
     return {
       question: '',
-      messageList: [{id: uuidv4(), isRobot: true, src: require('./assets/robot.png'), message: helloMsg, class: ['md-left', 'md-left-done', 'card', 'col-6']}],
+      messageList: [{id: uuidv4(), isRobot: true, src: require('./assets/robot.png'), message: helloMsg, class: ['md-left', 'md-left-done', 'card', 'col-9', 'col-sm-6']}],
       count: 0,
       requestId: 0,
       timeOutList: [],
@@ -56,21 +60,29 @@ export default {
   },
   methods: {
     sendMessge () {
-      if (this.question.length > 0) {
-        let robotClass = ['md-left', 'card', 'col-6']
-        let meClass = ['md-right', 'card', 'col-6']
+      let len = this.question.length
+      if (len > 0) {
+        if (len > 2000) {
+          alert('内容长度不能超过2000')
+          return
+        }
+        const that = this
+        let robotClass = ['md-left', 'card', 'col-9', 'col-sm-6']
+        let meClass = ['md-right', 'card', 'col-9', 'col-sm-6']
         let uuidMe = uuidv4()
         this.messageList.push({id: uuidMe, isRobot: false, src: require('./assets/me.png'), message: this.question, class: meClass})
+        setTimeout(function () {
+          window.scrollTo(0, document.body.scrollHeight)
+        }, 30)
 
         let uuidRobot = uuidv4()
         let messageItem = {id: uuidRobot, isRobot: true, src: require('./assets/robot.png'), message: standByMsg, class: robotClass}
         this.messageList.push(messageItem)
-
-        window.scrollTo(0, document.body.scrollHeight)
-        window.scrollTo(0, document.documentElement.scrollHeight)
+        setTimeout(function () {
+          window.scrollTo(0, document.body.scrollHeight)
+        }, 30)
 
         let startTime = 0
-        const that = this
         const eventSource = new EventSource(`${baseUrl}/index.php?req_id=${this.requestId}&question=${this.question}`)
         this.eventSource = eventSource
         eventSource.onmessage = function (e) {
@@ -164,12 +176,22 @@ function uuidv4 () {
   background-color: #e7f8ff;
 }
 .btn-stop {
-  margin: 0 auto 25px auto;
-  width: 100px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  margin-left: 40%;
   font-size: medium;
 }
 .btn-send {
   width: 80px;
   font-size: medium;
+}
+.footer-input {
+  margin-bottom: 20px;
+}
+.footer-btn {
+  margin-bottom: 20px;
+}
+.message-list-bottom {
+  height: 230px;
 }
 </style>

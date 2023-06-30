@@ -1,46 +1,11 @@
 {
-  root: '/Users/felix.zhou/work-notes/felix-chat/vue001',
+  root: '/Users/felix.zhou/go/src/openai-frontend',
   registry: 'https://registry.npmmirror.com',
   pkgs: [
     {
-      name: '',
-      version: '/Users/felix.zhou/work-notes/felix-chat/vue001/element-ui/lib/el-container',
-      type: 'directory',
-      alias: undefined,
-      arg: [Result]
-    },
-    {
-      name: '',
-      version: '/Users/felix.zhou/work-notes/felix-chat/vue001/element-ui/lib/el-footer',
-      type: 'directory',
-      alias: undefined,
-      arg: [Result]
-    },
-    {
-      name: '',
-      version: '/Users/felix.zhou/work-notes/felix-chat/vue001/element-ui/lib/el-main',
-      type: 'directory',
-      alias: undefined,
-      arg: [Result]
-    },
-    {
-      name: '',
-      version: '/Users/felix.zhou/work-notes/felix-chat/vue001/element-ui/lib/theme-chalk/el-container.css',
-      type: 'directory',
-      alias: undefined,
-      arg: [Result]
-    },
-    {
-      name: '',
-      version: '/Users/felix.zhou/work-notes/felix-chat/vue001/element-ui/lib/theme-chalk/el-footer.css',
-      type: 'directory',
-      alias: undefined,
-      arg: [Result]
-    },
-    {
-      name: '',
-      version: '/Users/felix.zhou/work-notes/felix-chat/vue001/element-ui/lib/theme-chalk/el-main.cs',
-      type: 'directory',
+      name: 'webpack-cdn-plugin',
+      version: '2.9.1',
+      type: 'version',
       alias: undefined,
       arg: [Result]
     }
@@ -50,7 +15,7 @@
   cacheDir: null,
   env: {
     npm_config_registry: 'https://registry.npmmirror.com',
-    npm_config_argv: '{"remain":[],"cooked":["--fix-bug-versions","--china","--userconfig=/Users/felix.zhou/.cnpmrc","--disturl=https://npmmirror.com/mirrors/node","--registry=https://registry.npmmirror.com","--save","element-ui/lib/el-container","element-ui/lib/el-footer","element-ui/lib/el-main","element-ui/lib/theme-chalk/el-container.css","element-ui/lib/theme-chalk/el-footer.css","element-ui/lib/theme-chalk/el-main.cs"],"original":["--fix-bug-versions","--china","--userconfig=/Users/felix.zhou/.cnpmrc","--disturl=https://npmmirror.com/mirrors/node","--registry=https://registry.npmmirror.com","--save","element-ui/lib/el-container","element-ui/lib/el-footer","element-ui/lib/el-main","element-ui/lib/theme-chalk/el-container.css","element-ui/lib/theme-chalk/el-footer.css","element-ui/lib/theme-chalk/el-main.cs"]}',
+    npm_config_argv: '{"remain":[],"cooked":["--fix-bug-versions","--china","--userconfig=/Users/felix.zhou/.cnpmrc","--disturl=https://npmmirror.com/mirrors/node","--registry=https://registry.npmmirror.com","webpack-cdn-plugin@2.9.1","--save-dev"],"original":["--fix-bug-versions","--china","--userconfig=/Users/felix.zhou/.cnpmrc","--disturl=https://npmmirror.com/mirrors/node","--registry=https://registry.npmmirror.com","webpack-cdn-plugin@2.9.1","--save-dev"]}',
     npm_config_user_agent: 'npminstall/7.5.2 npm/? node/v18.15.0 darwin arm64',
     NODE: '/usr/local/bin/node',
     npm_node_execpath: '/usr/local/bin/node',
@@ -58,6 +23,7 @@
     npm_config_userconfig: '/Users/felix.zhou/.cnpmrc',
     npm_config_disturl: 'https://npmmirror.com/mirrors/node',
     npm_config_r: 'https://registry.npmmirror.com',
+    COREPACK_NPM_REGISTRY: 'https://registry.npmmirror.com',
     NODEJS_ORG_MIRROR: 'https://cdn.npmmirror.com/binaries/node',
     NVM_NODEJS_ORG_MIRROR: 'https://cdn.npmmirror.com/binaries/node',
     PHANTOMJS_CDNURL: 'https://cdn.npmmirror.com/binaries/phantomjs',
@@ -69,23 +35,26 @@
     SASS_BINARY_SITE: 'https://cdn.npmmirror.com/binaries/node-sass',
     SWC_BINARY_SITE: 'https://cdn.npmmirror.com/binaries/node-swc',
     NWJS_URLBASE: 'https://cdn.npmmirror.com/binaries/nwjs/v',
-    PUPPETEER_DOWNLOAD_HOST: 'https://cdn.npmmirror.com/binaries',
+    PUPPETEER_DOWNLOAD_HOST: 'https://cdn.npmmirror.com/binaries/chrome-for-testing',
+    PUPPETEER_DOWNLOAD_BASE_URL: 'https://cdn.npmmirror.com/binaries/chrome-for-testing',
     PLAYWRIGHT_DOWNLOAD_HOST: 'https://cdn.npmmirror.com/binaries/playwright',
     SENTRYCLI_CDNURL: 'https://cdn.npmmirror.com/binaries/sentry-cli',
     SAUCECTL_INSTALL_BINARY_MIRROR: 'https://cdn.npmmirror.com/binaries/saucectl',
     RE2_DOWNLOAD_MIRROR: 'https://cdn.npmmirror.com/binaries/node-re2',
     RE2_DOWNLOAD_SKIP_PATH: 'true',
+    PRISMA_ENGINES_MIRROR: 'https://cdn.npmmirror.com/binaries/prisma',
     npm_config_better_sqlite3_binary_host: 'https://cdn.npmmirror.com/binaries/better-sqlite3',
     npm_config_keytar_binary_host: 'https://cdn.npmmirror.com/binaries/keytar',
     npm_config_sharp_binary_host: 'https://cdn.npmmirror.com/binaries/sharp',
     npm_config_sharp_libvips_binary_host: 'https://cdn.npmmirror.com/binaries/sharp-libvips',
     npm_config_robotjs_binary_host: 'https://cdn.npmmirror.com/binaries/robotjs',
-    npm_rootpath: '/Users/felix.zhou/work-notes/felix-chat/vue001',
-    INIT_CWD: '/Users/felix.zhou/work-notes/felix-chat/vue001',
+    npm_rootpath: '/Users/felix.zhou/go/src/openai-frontend',
+    INIT_CWD: '/Users/felix.zhou/go/src/openai-frontend',
     npm_config_cache: '/Users/felix.zhou/.npminstall_tarball'
   },
   binaryMirrors: {
     ENVS: {
+      COREPACK_NPM_REGISTRY: 'https://registry.npmmirror.com',
       NODEJS_ORG_MIRROR: 'https://cdn.npmmirror.com/binaries/node',
       NVM_NODEJS_ORG_MIRROR: 'https://cdn.npmmirror.com/binaries/node',
       PHANTOMJS_CDNURL: 'https://cdn.npmmirror.com/binaries/phantomjs',
@@ -97,12 +66,14 @@
       SASS_BINARY_SITE: 'https://cdn.npmmirror.com/binaries/node-sass',
       SWC_BINARY_SITE: 'https://cdn.npmmirror.com/binaries/node-swc',
       NWJS_URLBASE: 'https://cdn.npmmirror.com/binaries/nwjs/v',
-      PUPPETEER_DOWNLOAD_HOST: 'https://cdn.npmmirror.com/binaries',
+      PUPPETEER_DOWNLOAD_HOST: 'https://cdn.npmmirror.com/binaries/chrome-for-testing',
+      PUPPETEER_DOWNLOAD_BASE_URL: 'https://cdn.npmmirror.com/binaries/chrome-for-testing',
       PLAYWRIGHT_DOWNLOAD_HOST: 'https://cdn.npmmirror.com/binaries/playwright',
       SENTRYCLI_CDNURL: 'https://cdn.npmmirror.com/binaries/sentry-cli',
       SAUCECTL_INSTALL_BINARY_MIRROR: 'https://cdn.npmmirror.com/binaries/saucectl',
       RE2_DOWNLOAD_MIRROR: 'https://cdn.npmmirror.com/binaries/node-re2',
       RE2_DOWNLOAD_SKIP_PATH: 'true',
+      PRISMA_ENGINES_MIRROR: 'https://cdn.npmmirror.com/binaries/prisma',
       npm_config_better_sqlite3_binary_host: 'https://cdn.npmmirror.com/binaries/better-sqlite3',
       npm_config_keytar_binary_host: 'https://cdn.npmmirror.com/binaries/keytar',
       npm_config_sharp_binary_host: 'https://cdn.npmmirror.com/binaries/sharp',
@@ -213,7 +184,7 @@
   disableFallbackStore: false,
   workspacesMap: Map(0) {},
   enableWorkspace: false,
-  workspaceRoot: '/Users/felix.zhou/work-notes/felix-chat/vue001',
+  workspaceRoot: '/Users/felix.zhou/go/src/openai-frontend',
   isWorkspaceRoot: true,
   isWorkspacePackage: false,
   strictSSL: true,

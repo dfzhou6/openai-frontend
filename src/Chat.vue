@@ -4,8 +4,8 @@
     <div><br></div>
     <div id="message-list" class="row">
       <div class="message" v-for="(item, idx) in messageList" :key="idx">
-        <img :class="[item.isRobot ? 'avator-left' : 'avator-right', 'img-thumbnail']" :src="item.src" alt="头像" />
-        <div :class="item.class">
+        <img :class="[item.isRobot ? 'avator-left' : 'avator-right', 'img-thumbnail', 'shadow']" :src="item.src" alt="头像" />
+        <div :class="[item.class, 'shadow']">
           <!-- <vue-markdown :id="item.id" :source="item.message" class="card-body"></vue-markdown> -->
           <div :id="item.id" class="card-body" v-html="item.message"></div>
         </div>
@@ -14,17 +14,17 @@
       <div class="message-list-bottom"><br></div>
     </div>
     <div class="row fixed-bottom">
-      <div><button class="btn btn-secondary btn-stop" @click="stopAnswer" type="button">停止回答</button></div>
+      <div><button class="btn btn-secondary btn-stop shadow" @click="stopAnswer" type="button">停止回答</button></div>
       <div class="col-1 col-sm-1">
       </div>
       <div class="col-8 col-sm-9">
         <div class="input-group footer-input">
-          <textarea class="form-control" id="message-input" rows="5" style="line-height: 30px;" type="text" v-model="question" @keydown.enter="ctrlSendMessage" placeholder="Ctrl+Enter: 换行" />
+          <textarea class="form-control shadow" id="message-input" rows="5" style="line-height: 30px;" type="text" v-model="question" @keydown.enter="ctrlSendMessage" placeholder="Ctrl+Enter: 换行" />
         </div>
       </div>
       <div class="col-2 col-sm-1">
         <div class="input-group footer-btn">
-          <button @click="sendMessge" class="btn btn-primary btn-send" type="button">发送</button>
+          <button @click="sendMessge" class="btn btn-primary btn-send shadow" type="button">发送</button>
         </div>
       </div>
       <div class="col-sm-1">

@@ -16,10 +16,12 @@
           <input type="password" class="form-control" id="inputPassword" v-model="password">
         </div>
       </div>
-      <div class="mb-3 row text-center"><i><a class="" href="#" title="Please contact with felix">没有账号? 关注微信公众号: felixzhou777, 免费领取</a></i></div>
-      <div class="row px-2">
+      <div class="mb-3 row px-2">
         <button type="button" class="btn btn-primary" @click="signIn">登录</button>
       </div>
+      <div class="mb-3 row text-center"><i><a class="" href="#" title="Please contact with felix">没有账号? 关注微信公众号: felixzhou777, 免费领取</a></i></div>
+      <div class="row text-center"><i><a class="" href="#" title="Please contact with felix">忘记密码? 进入微信公众号: felixzhou777, 查看历史</a></i></div>
+
     </div>
     <div class="w-75 mx-auto px-3 py-3 mb-5">
       <div>

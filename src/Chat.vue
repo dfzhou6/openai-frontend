@@ -19,7 +19,7 @@
       </div>
       <div class="col-8 col-sm-9">
         <div class="input-group footer-input">
-          <textarea class="form-control shadow" id="message-input" rows="5" style="line-height: 30px;" type="text" v-model="question" @keydown.enter="ctrlSendMessage" placeholder="Ctrl+Enter: 换行" />
+          <textarea class="form-control shadow" id="message-input" rows="3" style="line-height: 30px;" type="text" v-model="question" @keydown.enter="ctrlSendMessage" placeholder="Ctrl+Enter: 换行" />
         </div>
       </div>
       <div class="col-2 col-sm-1">
@@ -37,7 +37,6 @@
 
 <script>
 const baseUrl = 'https://ai-fozhu.cn'
-const helloMsg = '你好呀，我是AI机器人，有什么可以帮到你的吗？'
 const standByMsg = '请稍候...'
 const errRespondMsg = '请求出错...'
 const md = window.markdownit('default')
@@ -47,13 +46,7 @@ export default {
   data () {
     return {
       question: '',
-      messageList: [{
-        id: uuidv4(),
-        isRobot: true,
-        src: require('./assets/robot.png'),
-        message: md.render(helloMsg),
-        class: ['md-left', 'md-left-done', 'card', 'col-9', 'col-sm-6']
-      }],
+      messageList: [],
       count: 0,
       requestId: 0,
       timeOutList: [],
@@ -67,6 +60,35 @@ export default {
       return
     }
     this.requestId = Date.now() + '_' + Math.round(Math.random() * 10000)
+    
+    let messageItem = {id: uuidv4(), isRobot: true, src: require('./assets/robot.png'), message: md.render(''), class: ['md-left', 'card', 'col-9', 'col-sm-6']}
+    this.messageList.push(messageItem)
+    const weekdays = ['日','一','二','三','四','五','六']
+    let curDate = new Date
+    const year = curDate.getFullYear();
+    const month = String(curDate.getMonth() + 1).padStart(2, '0');
+    const day = String(curDate.getDate()).padStart(2, '0');
+    const formattedDate = `${year}-${month}-${day}`;
+    const words = '你该像风一样自由，无拘无束。'
+    const author = '与君初相识'
+
+    let curMessage = ''
+    let helloMsg = '你好呀，今天是 ' + formattedDate + '，星期' + weekdays[curDate.getDay()] + '。\n\n"' + words + '"\n———《' + author + '》\n\n' + '新的一天，享受当下，要开心哦 ~\n\n让我们开始聊天吧 ~ '
+    let startTime = 0
+    let timeOutList = []
+    for (let i = 0; i < helloMsg.length; i++) {
+      startTime += 80
+      let timeOutId = setTimeout(function () {
+        curMessage += helloMsg[i]
+        messageItem.message = md.render(curMessage)
+        if (i == helloMsg.length-1) {
+          messageItem.class.push('md-left-done')
+        }
+        window.scrollTo(0, document.body.scrollHeight)
+      }, startTime)
+      timeOutList.push(timeOutId)
+    }
+    
   },
   methods: {
     isLogin () {

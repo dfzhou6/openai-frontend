@@ -60,37 +60,60 @@ export default {
       return
     }
     this.requestId = Date.now() + '_' + Math.round(Math.random() * 10000)
-
-    let messageItem = {id: uuidv4(), isRobot: true, src: require('./assets/robot.png'), message: md.render(''), class: ['md-left', 'card', 'col-9', 'col-sm-6']}
-    this.messageList.push(messageItem)
-    const weekdays = ['日','一','二','三','四','五','六']
-    let curDate = new Date
-    const year = curDate.getFullYear();
-    const month = String(curDate.getMonth() + 1).padStart(2, '0');
-    const day = String(curDate.getDate()).padStart(2, '0');
-    const formattedDate = `${year}-${month}-${day}`;
-    const words = '你该像风一样自由，无拘无束。'
-    const author = '与君初相识'
-
-    let curMessage = ''
-    let helloMsg = '你好呀，今天是 ' + formattedDate + '，星期' + weekdays[curDate.getDay()] + '。\n\n"' + words + '"\n———《' + author + '》\n\n' + '新的一天，享受当下，要开心哦 ~\n\n让我们开始聊天吧 ~ '
-    let startTime = 0
-    let timeOutList = []
-    for (let i = 0; i < helloMsg.length; i++) {
-      startTime += 80
-      let timeOutId = setTimeout(function () {
-        curMessage += helloMsg[i]
-        messageItem.message = md.render(curMessage)
-        if (i == helloMsg.length-1) {
-          messageItem.class.push('md-left-done')
-        }
-        window.scrollTo(0, document.body.scrollHeight)
-      }, startTime)
-      timeOutList.push(timeOutId)
-    }
-
+    this.setHelloMsg()
   },
   methods: {
+    setHelloMsg() {
+      const that = this
+      let messageItem = {id: uuidv4(), isRobot: true, src: require('./assets/robot.png'), message: md.render(''), class: ['md-left', 'card', 'col-9', 'col-sm-6']}
+      this.messageList.push(messageItem)
+      const weekdays = ['日','一','二','三','四','五','六']
+      let curDate = new Date
+      const year = curDate.getFullYear();
+      const month = String(curDate.getMonth() + 1).padStart(2, '0');
+      const day = String(curDate.getDate()).padStart(2, '0');
+      const formattedDate = `${year}-${month}-${day}`;
+      const requestOptions = {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      };
+      fetch('https://ai-fozhu.cn/api/hello', requestOptions)
+      .then(response => {
+        if (response.ok) {
+          // 处理响应的数据
+          response.json().then(data => {
+            console.log(data);
+            if (data.code == 0) {
+              const source = data.data.source
+              const words = data.data.words
+              let curMessage = ''
+              let helloMsg = '你好呀，今天是 ' + formattedDate + '，星期' + weekdays[curDate.getDay()] + '。\n\n"' + words + '"\n———《' + source + '》\n\n' + '新的一天，享受当下，要开心哦 ~\n\n让我们开始聊天吧 ~ '
+              let startTime = 0
+              let timeOutList = []
+              for (let i = 0; i < helloMsg.length; i++) {
+                startTime += 80
+                let timeOutId = setTimeout(function () {
+                  curMessage += helloMsg[i]
+                  messageItem.message = md.render(curMessage)
+                  if (i == helloMsg.length-1) {
+                    messageItem.class.push('md-left-done')
+                  }
+                  window.scrollTo(0, document.body.scrollHeight)
+                }, startTime)
+                timeOutList.push(timeOutId)
+              }
+            } else {
+
+            }
+          });
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
+    },
     isLogin () {
       let expireTime = localStorage.getItem('felixChatGPT_expire_time')
       let curtime = Date.parse(new Date()) / 1000
@@ -166,6 +189,8 @@ export default {
           messageItem.message = md.render(errRespondMsg)
           messageItem.class.push('md-left-err')
           eventSource.close()
+          alert('请重新登录')
+          that.$router.push({name: 'login'})
         }
 
         this.question = ''

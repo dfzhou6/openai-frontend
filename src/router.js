@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 
 import Chat from './Chat'
 import Login from './Login'
+import HelloMsg from './HelloMsg'
 
 Vue.use(VueRouter)
 
@@ -23,6 +24,11 @@ export default new VueRouter({
       path: '/login',
       name: 'login',
       component: Login
+    },
+    {
+      path: '/hellomsg',
+      name: 'hellomsg',
+      component: HelloMsg
     }
   ]
 })

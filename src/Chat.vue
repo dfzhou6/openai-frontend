@@ -60,7 +60,7 @@ export default {
       return
     }
     this.requestId = Date.now() + '_' + Math.round(Math.random() * 10000)
-    
+
     let messageItem = {id: uuidv4(), isRobot: true, src: require('./assets/robot.png'), message: md.render(''), class: ['md-left', 'card', 'col-9', 'col-sm-6']}
     this.messageList.push(messageItem)
     const weekdays = ['日','一','二','三','四','五','六']
@@ -88,7 +88,7 @@ export default {
       }, startTime)
       timeOutList.push(timeOutId)
     }
-    
+
   },
   methods: {
     isLogin () {
@@ -133,7 +133,7 @@ export default {
         }, 30)
 
         let startTime = 0
-        const eventSource = new EventSource(`${baseUrl}/index.php?control=Index&method=Chat&username=${username}&req_id=${this.requestId}&question=${this.question}`)
+        const eventSource = new EventSource(`${baseUrl}/api/chat?username=${username}&req_id=${this.requestId}&question=${this.question}`)
         this.eventSource = eventSource
         const that = this
         let curMessage = ''

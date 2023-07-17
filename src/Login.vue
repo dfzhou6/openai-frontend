@@ -68,7 +68,7 @@ export default {
         },
         body: JSON.stringify(body)
       };
-      fetch('https://ai-fozhu.cn/index.php?control=Index&method=Login', requestOptions)
+      fetch('https://ai-fozhu.cn/api/login', requestOptions)
       .then(response => {
         if (response.ok) {
           // 处理响应的数据

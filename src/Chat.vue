@@ -1,11 +1,58 @@
 <template>
 
   <div>
-    <div><br></div>
-    <div id="message-list" class="row">
+    <!-- <div class="row"><br></div> -->
+    <nav class="navbar fixed-top bg-body-tertiary shadow">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+
+        </a>
+        <a class="navbar-brand" href="#">
+          <div class="dropdown">
+            <button class="btn dropdown-toggle shadow" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+              <i class="bi bi-list"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end shadow border-0">
+              <li class="mb-2"><a class="dropdown-item" href="#" @click="goToLogin"><i class="bi bi-box-arrow-in-left me-2"></i>重新登录</a></li>
+              <!-- <li><hr class="dropdown-divider"></li> -->
+              <!-- <li class="mb-2"><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@fat"><i class="bi bi-envelope me-2"></i>意见箱</a></li> -->
+              <!-- <li><hr class="dropdown-divider"></li> -->
+              <li><a class="dropdown-item" href="#" tabindex="0" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="bottom" data-bs-content="如遇到使用问题，请刷新页面，并重新登录"><i class="bi bi-question-circle me-2"></i>帮助</a></li>
+            </ul>
+          </div>
+        </a>
+      </div>
+    </nav>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header border-0 pb-0">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">意见箱</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body border-0 pb-0">
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">联系方式:</label>
+              <input type="text" class="form-control" id="recipient-name" placeholder="非必填">
+            </div>
+            <div class="mb-3">
+              <label for="message-text" class="col-form-label">意见建议:</label>
+              <textarea class="form-control" id="message-text"></textarea>
+            </div>
+          </div>
+          <div class="modal-footer border-0 pt-0">
+            <button type="button" class="btn btn-secondary shadow" data-bs-dismiss="modal">取消</button>
+            <button type="button" class="btn btn-primary shadow">提交</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="message-list" class="row" style="margin-top: 80px;">
       <div class="message" v-for="(item, idx) in messageList" :key="idx">
-        <img :class="[item.isRobot ? 'avator-left' : 'avator-right', 'img-thumbnail', 'shadow']" :src="item.src" alt="头像" />
-        <div :class="[item.class, 'shadow']">
+        <img :class="[item.isRobot ? 'avator-left' : 'avator-right', 'img-thumbnail', 'shadow', 'border-0']" :src="item.src" alt="头像" />
+        <div :class="[item.class, 'shadow', 'border-0']">
           <!-- <vue-markdown :id="item.id" :source="item.message" class="card-body"></vue-markdown> -->
           <div :id="item.id" class="card-body" v-html="item.message"></div>
         </div>
@@ -14,17 +61,17 @@
       <div class="message-list-bottom"><br></div>
     </div>
     <div class="row fixed-bottom">
-      <div><button class="btn btn-secondary btn-stop shadow" @click="stopAnswer" type="button">停止回答</button></div>
+      <div><button class="btn btn-stop btn-sm shadow" @click="stopAnswer" type="button"><i class="bi bi-slash-square"></i></button></div>
       <div class="col-1 col-sm-1">
       </div>
       <div class="col-8 col-sm-9">
         <div class="input-group footer-input">
-          <textarea class="form-control shadow" id="message-input" rows="3" style="line-height: 30px;" type="text" v-model="question" @keydown.enter="ctrlSendMessage" placeholder="Ctrl+Enter: 换行" />
+          <textarea class="form-control shadow border-0" id="message-input" rows="3" style="line-height: 30px;" type="text" v-model="question" @keydown.enter="ctrlSendMessage" placeholder="Ctrl+Enter: 换行" />
         </div>
       </div>
       <div class="col-2 col-sm-1">
         <div class="input-group footer-btn">
-          <button @click="sendMessge" class="btn btn-primary btn-send shadow" type="button">发送</button>
+          <button @click="sendMessge" class="btn btn-outline-primary btn-lg shadow" type="button"><i class="bi bi-send"></i></button>
         </div>
       </div>
       <div class="col-sm-1">
@@ -204,6 +251,9 @@ export default {
         this.sendMessge()
       }
     },
+    goToLogin() {
+      this.$router.push({name: 'login'})
+    },
     stopAnswer () {
       if (this.eventSource !== null) {
         this.eventSource.close()
@@ -267,7 +317,7 @@ function uuidv4 () {
   margin-bottom: 20px;
 }
 .footer-btn {
-  margin-bottom: 20px;
+  margin-top: 5px;
 }
 .message-list-bottom {
   height: 230px;

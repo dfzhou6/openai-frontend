@@ -2,8 +2,8 @@
 
   <div>
     <!-- <div class="row"><br></div> -->
-    <nav class="navbar fixed-top bg-body-tertiary shadow">
-      <div class="container-fluid">
+    <nav class="navbar fixed-top bg-body-tertiary shadow" style="height: 58px;">
+      <div class="container-fluid" style="margin-top: -4px;">
         <a class="navbar-brand" href="#">
 
         </a>
@@ -49,7 +49,7 @@
       </div>
     </div>
 
-    <div id="message-list" class="row" style="margin-top: 80px;">
+    <div id="message-list" class="row" style="margin-top: 74px;">
       <div class="message" v-for="(item, idx) in messageList" :key="idx">
         <img :class="[item.isRobot ? 'avator-left' : 'avator-right', 'img-thumbnail', 'shadow', 'border-0']" :src="item.src" alt="头像" />
         <div :class="[item.class, 'shadow', 'border-0']">

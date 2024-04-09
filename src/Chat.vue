@@ -102,9 +102,10 @@ export default {
       eventSource: null
     }
   },
-  mounted () {
-    if (!this.isLogin()) {
-      this.$router.push({name: 'login'})
+  async mounted () {
+    const ok = await this.isLogin()
+    if (!ok) {
+      await this.$router.push({name: 'login'})
       return
     }
     this.requestId = Date.now() + '_' + Math.round(Math.random() * 10000)

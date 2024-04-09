@@ -27,17 +27,19 @@
 
 <script>
 
+import constant from './constant'
+
 export default {
   name: 'HelloMsg',
   data () {
     return {
-      words: "",
-      source: ""
+      words: '',
+      source: ''
     }
   },
   methods: {
-    updateHelloMsg() {
-      if (this.words.length == 0 || this.source.length == 0) {
+    updateHelloMsg () {
+      if (this.words.length === 0 || this.source.length === 0) {
         alert('内容不能为空')
         return
       }
@@ -52,26 +54,26 @@ export default {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(body)
-      };
-      fetch('https://ai-fozhu.cn/api/hello', requestOptions)
-      .then(response => {
-        if (response.ok) {
+      }
+      fetch(`${constant.BASE_URL}/api/hello`, requestOptions)
+        .then(response => {
+          if (response.ok) {
           // 处理响应的数据
-          response.json().then(data => {
-            console.log(data);
-            if (data.code == 0) {
-              this.goToChat()
-            } else {
-              alert(data.msg)
-            }
-          });
-        } else {
-          alert('服务器出错');
-        }
-      })
-      .catch(error => {
-        console.error(error);
-      });
+            response.json().then(data => {
+              console.log(data)
+              if (data.code === 0) {
+                this.goToChat()
+              } else {
+                alert(data.msg)
+              }
+            })
+          } else {
+            alert('服务器出错')
+          }
+        })
+        .catch(error => {
+          console.error(error)
+        })
     },
     goToChat () {
       this.$router.push({name: 'chat'})

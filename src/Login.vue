@@ -67,8 +67,8 @@ export default {
             response.json().then(data => {
               console.log(data)
               if (data.code === 0) {
-                localStorage.setItem('felixChatGPT_expire_time', data.data.expire_time)
-                localStorage.setItem('felixChatGPT_username', this.username)
+                localStorage.setItem('felixChatGPT_token', data.data.token)
+                localStorage.setItem('felixChatGPT_username', data.data.username)
                 this.goToChat()
               } else {
                 alert(data.msg)

@@ -71,7 +71,7 @@
       </div>
       <div class="col-2 col-sm-1">
         <div class="input-group footer-btn">
-          <button @click="sendMessge" class="btn btn-outline-primary btn-lg shadow" type="button"><i class="bi bi-send"></i></button>
+          <button @click="sendMessage" class="btn btn-outline-primary btn-lg shadow" type="button"><i class="bi bi-send"></i></button>
         </div>
       </div>
       <div class="col-sm-1">
@@ -104,7 +104,6 @@ export default {
   },
   mounted () {
     if (!this.isLogin()) {
-      alert('请重新登录')
       this.$router.push({name: 'login'})
       return
     }
@@ -162,29 +161,48 @@ export default {
           console.error(error)
         })
     },
-    isLogin () {
-      let expireTime = localStorage.getItem('felixChatGPT_expire_time')
-      let curtime = Date.parse(new Date()) / 1000
-      if (typeof (expireTime) === 'undefined') {
-        return false
+    async isLogin () {
+      const requestOptions = {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
       }
-      expireTime = parseInt(expireTime)
-      return !(expireTime === 0 || isNaN(expireTime) || curtime >= expireTime)
+      const params = {
+        username: localStorage.getItem('felixChatGPT_username'),
+        token: localStorage.getItem('felixChatGPT_token')
+      }
+      const url = `${constant.BASE_URL}/api/login/check?` + new URLSearchParams(params)
+      let checkOk = false
+      try {
+        const rsp = await fetch(url, requestOptions)
+        const data = await rsp.json()
+        console.log(data)
+        if (data.code === 0) {
+          checkOk = true
+        } else {
+          alert(data.msg)
+        }
+      } catch (error) {
+        alert(error)
+      }
+      return checkOk
     },
-    sendMessge () {
+    async sendMessage () {
       let len = this.question.length
       if (len > 0) {
         if (len > 2000) {
           alert('内容长度不能超过2000')
           return
         }
-        if (!this.isLogin()) {
-          alert('请重新登录')
+        const ok = await this.isLogin()
+        if (!ok) {
           this.$router.push({name: 'login'})
           return
         }
 
         let username = localStorage.getItem('felixChatGPT_username')
+        let token = localStorage.getItem('felixChatGPT_token')
         let robotClass = ['md-left', 'card', 'col-9', 'col-sm-6']
         let meClass = ['md-right', 'card', 'col-9', 'col-sm-6']
         let uuidMe = uuidv4()
@@ -201,7 +219,7 @@ export default {
         }, 30)
 
         let startTime = 0
-        const eventSource = new EventSource(`${constant.BASE_URL}/api/chat?username=${username}&req_id=${this.requestId}&question=${this.question}`)
+        const eventSource = new EventSource(`${constant.BASE_URL}/api/chat?username=${username}&token=${token}&req_id=${this.requestId}&question=${this.question}`)
         this.eventSource = eventSource
         const that = this
         let curMessage = ''
@@ -246,11 +264,32 @@ export default {
         this.question = this.question + '\n'
       } else {
         e.preventDefault()
-        this.sendMessge()
+        this.sendMessage()
       }
     },
-    goToLogin () {
-      this.$router.push({name: 'login'})
+    async goToLogin () {
+      const requestOptions = {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+      const params = {
+        username: localStorage.getItem('felixChatGPT_username'),
+        token: localStorage.getItem('felixChatGPT_token')
+      }
+      const url = `${constant.BASE_URL}/api/logout?` + new URLSearchParams(params)
+      try {
+        const rsp = await fetch(url, requestOptions)
+        const data = await rsp.json()
+        console.log(data)
+        if (data.code !== 0) {
+          alert(data.msg)
+        }
+      } catch (error) {
+        alert(error)
+      }
+      await this.$router.push({name: 'login'})
     },
     stopAnswer () {
       if (this.eventSource !== null) {

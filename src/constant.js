@@ -1,3 +1,3 @@
 export default {
-  BASE_URL: 'http://ai-xzzb.cn'
+  BASE_URL: 'https://ai-xzzb.cn'
 }
